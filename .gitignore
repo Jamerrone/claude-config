@@ -1,0 +1,12 @@
+# Allowlist; never switch to a blocklist. Anything new in ~/.claude
+# (credentials, session state) must stay ignored by default.
+/*
+!/.gitignore
+!/README.md
+!/settings.sync.json
+!/statusline.sh
+!/rules
+!/skills
+# Unanchored: unlike the allowlist, these also apply inside rules/ and skills/.
+.DS_Store
+.credentials.json
