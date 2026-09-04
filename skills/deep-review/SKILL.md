@@ -1,6 +1,6 @@
 ---
 name: deep-review
-description: The bundled code-review workflow with the report cap raised from 10 to 32. Use wherever /code-review would be used.
+description: Workflow-backed code review with independent verification and a report cap of 32. Use wherever /code-review would be used.
 ---
 
 Run the workflow-backed code review instead of reviewing inline.
@@ -14,7 +14,7 @@ target, not a level.
 
 Everything after the level in the args string is passed to the workflow as the review target / instructions. If the user gave additional instructions for this review elsewhere in the conversation (a scope restriction, files to focus on, things to skip), append them to the args string so the workflow honors them.
 
-The workflow runs the same finder angles and verify pass as the inline review, in the background; the verified findings arrive as a task notification. When they arrive, call ReportFindings once with {level, findings} from the result payload (most-severe first; empty array if nothing survived). Give each finding a `short_summary`: the claim compressed to ≤60 characters, no rationale or consequence clause. Do not also print the findings as text.
+The workflow runs its finders and verify pass in the background; the verified findings arrive as a task notification. When they arrive, call ReportFindings once with {level, findings} from the result payload (most-severe first; empty array if nothing survived). Give each finding a `short_summary`: the claim compressed to ≤60 characters, no rationale or consequence clause. Do not also print the findings as text.
 
 ## Reporting the run
 
