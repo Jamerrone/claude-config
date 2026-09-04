@@ -8,9 +8,10 @@ Run the workflow-backed code review instead of reviewing inline.
 Invoke: Workflow({ scriptPath: "<skill base directory>/review-workflow.js", args: "<level> <target>" })
 
 Level is `high` by default; pass `xhigh` or `max` only when the user asks for
-a deeper pass (both widen the finder pool and add the Sweep phase). Pass the
-level token exactly; an unrecognized first word is treated as part of the
-target, not a level.
+a deeper pass (both add correctness angles and the Sweep phase). Every angle
+of a level always runs; the diff size only decides how many finders carry
+them. Pass the level token exactly; an unrecognized first word is treated as
+part of the target, not a level.
 
 Everything after the level in the args string is passed to the workflow as the review target / instructions. If the user gave additional instructions for this review elsewhere in the conversation (a scope restriction, files to focus on, things to skip), append them to the args string so the workflow honors them.
 
@@ -22,7 +23,7 @@ If the payload is an error object with no findings (the scope step failed),
 do not call ReportFindings: report the error to the user and offer to re-run.
 
 Otherwise, report the stats the payload actually carries alongside the
-findings (a full run reports candidates, verified, refuted, and reported;
+findings (a full run reports diffLines, finders, candidates, verified, refuted, and reported;
 early exits omit fields they never computed; report only what is present,
 never invent a value). The counts are not nested subsets: refuted is the
 slice of verified that failed re-checking, and reported is the synthesis
