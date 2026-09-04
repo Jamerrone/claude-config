@@ -20,7 +20,13 @@ machine, and again whenever the fragment changes:
       && mv /tmp/s.json ~/.claude/settings.json
 
 The fragment carries the plugin set (with their marketplaces; Claude Code
-installs them on next start) and the hooks. The Claude in Chrome extension is
+installs them on next start), the hooks, and the additional directories.
+The skills directories are listed there because the Workflow tool only
+runs scripts from the project, an added directory, or a path it returned
+itself; without them, skills that ship a workflow script (deep-review)
+cannot launch. Permission checks resolve symlinks and require both the link
+and its target to match, so the fragment lists `~/.claude/skills` and the
+repo's own `skills/` at its assumed clone path, `~/Projects/claude-config`. The Claude in Chrome extension is
 not a Claude Code plugin and cannot be synced here; Chrome's own profile sync
 distributes it.
 

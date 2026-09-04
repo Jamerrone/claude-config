@@ -36,5 +36,11 @@
         ]
       }
     ]
+  },
+  "permissions": {
+    "additionalDirectories": [
+      "~/.claude/skills",
+      "~/Projects/claude-config/skills"
+    ]
   }
 }
