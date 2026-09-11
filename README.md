@@ -14,9 +14,19 @@ clone it elsewhere and symlink `rules/`, `skills/`, and `statusline.sh` into
 `settings.sync.json` is a fragment, not a live settings file: the harness
 writes machine state into `~/.claude/settings.json` (theme, accepted
 dialogs), so that file stays untracked. Merge the fragment into it once per
-machine, and again whenever the fragment changes:
+machine, and again whenever the fragment changes. Objects merge key by key
+and arrays union, so hook lists the machine already carries (an iTerm status
+hook, say) keep their entries and the fragment's are added once:
 
-    jq -s '.[0] * .[1]' ~/.claude/settings.json settings.sync.json > /tmp/s.json \
+    jq -s '
+      def merge($a; $b):
+        if ($a | type) == "object" and ($b | type) == "object" then
+          reduce ($b | keys[]) as $k ($a; .[$k] = merge($a[$k]; $b[$k]))
+        elif ($a | type) == "array" and ($b | type) == "array" then
+          $a + ($b - $a)
+        else $b end;
+      merge(.[0]; .[1])
+    ' ~/.claude/settings.json settings.sync.json > /tmp/s.json \
       && mv /tmp/s.json ~/.claude/settings.json
 
 The fragment carries the plugin set (with their marketplaces; Claude Code
