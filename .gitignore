@@ -7,6 +7,9 @@
 !/statusline.sh
 !/rules
 !/skills
+# Claude Code writes these through the ~/.claude/skills symlink.
+/skills/synced/
+/skills/.trash/
 # Unanchored: unlike the allowlist, these also apply inside rules/ and skills/.
 .DS_Store
 .credentials.json
